@@ -21,5 +21,7 @@
 linux : CentOS 7.9  
 編譯器：icc/2023.1.0  
 
-筆者最初是按照官網，在虛擬機自行裝CentOS7後，用GNU的C、FORTRAN編譯器(gcc、gfortran)，去做library的編譯，後來編譯換成intel了(icc、icpc、ifort)。Linux的部分，也有人選擇Ubuntu或是WSL，個人debug過程網路上看下來感覺Ubuntu是最多人選擇的，原因之一好像是CentOS系列對於編譯WRF來講不太友善。(看過有人評論CentOS是對初學者來說最不友善的作業系統哈哈XD)
+筆者最初是按照官網，在虛擬機自行裝CentOS7後，用GNU的C、FORTRAN編譯器(gcc、gfortran)，去做library的編譯，後來編譯換成intel了(icc、icpc、ifort)。Linux的部分，也有人選擇Ubuntu或是WSL，個人debug過程網路上看下來感覺Ubuntu是最多人選擇的，原因之一好像是CentOS系列對於編譯WRF來講不太友善(看過有人評論CentOS是對初編譯WRF來說最不友善的作業系統哈哈XD)。再來是不論使用何種編譯器、何種版本，一定要從頭到尾都用同一個版本的編譯器，不能說你用gcc7編譯library、用gcc10編譯WRF，請不要這樣做。
 ## Library
+因為WRF會需要使用到netcdf-library(包含C和FORTRAN)以及其他相依的zlib、libpng、jasper，所以要先安裝並編譯library。
+這邊想提個，第一次編譯library，
