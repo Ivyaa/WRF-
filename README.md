@@ -27,17 +27,17 @@ linux : CentOS 7.9
 這邊想先提個，第一次編譯library，筆者也不太了解所謂「架構」，是被提了一下有不同「架構」的library，才開始了解官網在configure後面附加的一堆選項代表什麼意思。  
 關於「架構」，筆者簡單理解為將編譯完的函式庫放入不同分類的資料夾，例如官網上的library架構可以大概圖解成：  
 
-WRFLIB_sharedstd  
-  |------grib2  
-  |        |-----bin  
-  |        |-----lib  
-  |        |-----include  
-  |             
-  |------netcdf  
-  |        |-----bin  
-  |        |-----lib  
-  |        |-----include 
-  |  
+>WRFLIB_sharedstd  
+>>grib2  
+>>>bin  
+>>>lib  
+>>>include  
+>             
+>>netcdf  
+>>>bin  
+>>>lib  
+>>>include 
+> 
 
 你會在configure後面看到
 >--prefix=path/to/grib2
