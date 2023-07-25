@@ -17,4 +17,9 @@
 會先提這個，是因為兩者對於library的要求不同，編譯library的順序、需要添加的選項也不一樣，在編譯的時候需要注意，不然就會像筆者一樣一個WRF編譯卡好久，但其實只是因為安裝netcdf-fortran的時候沒注意到這個問題。下面就以這兩種版本作區分來安裝WRF～
 
 # Classic verion WRF4.4
+先記錄一下使用環境和Linux版本  
+linux : CentOS 7.9  
+編譯器：icc/2023.1.0  
+
+筆者最初是按照官網，在虛擬機自行裝CentOS7後，用GNU的C、FORTRAN編譯器(gcc、gfortran)，去做library的編譯，後來編譯換成intel了(icc、icpc、ifort)。Linux的部分，也有人選擇Ubuntu或是WSL，個人debug過程網路上看下來感覺Ubuntu是最多人選擇的，原因之一好像是CentOS系列對於編譯WRF來講不太友善。(看過有人評論CentOS是對初學者來說最不友善的作業系統哈哈XD)
 ## Library
