@@ -9,10 +9,9 @@
 ※侵權刪(？)
 
 # WRF版本
-官網：https://www2.mmm.ucar.edu/wrf/users/download/get_source.html
-安裝教學：https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php#STEP1
-這兩個連結是官方提供的下載點以及所需library的編譯過程，由於一開始是完全按照官網的方式去執行，完全沒有注意到WRF library還有分Classic、Compression的差別，最大的差異在於是否要使用NC4。
+官網：https://www2.mmm.ucar.edu/wrf/users/download/get_source.html  
+安裝教學：https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php#STEP1  
+這兩個連結是官方提供的下載點以及所需library的編譯過程，由於一開始是完全按照官網的方式去執行，完全沒有注意到WRF library還有分Classic、Compression的差別，最大的差異在於是否要使用NC4。  
 
-◼ 若在編譯netcdf-C及netcdf-fortran時，加入選項--disable-netcdf-4，即是不使用NC4，理論上編譯出來的WRF就是Classic版本，這也是官網提供的版本。 
+◼ 若在編譯netcdf-C及netcdf-fortran時，加入選項--disable-netcdf-4，即是不使用NC4，理論上編譯出來的WRF就是Classic版本，這也是官網提供的版本。  
 ◼ 若不加入選項--disable-netcdf-4，編譯WRF的時候就會自動編譯成Compression版本，也會告訴你這個版本需要使用NC4
-
