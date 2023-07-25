@@ -42,4 +42,4 @@ linux : CentOS 7.9
 你會在configure後面看到：
 >--prefix=path/to/grib2     #make install後會指定到此資料夾  
 
-就是將編譯完成的函式庫放進這個資料夾中，並進行簡單的分類(像是XXXX.h檔案會放在grib2/include/，這個資料夾底下；XXX.so檔案會放在grib2/lib/)
+就是將編譯完成的函式庫放進這個資料夾中(會自行建立)，並進行簡單的分類(像是XXXX.h檔案會放在grib2/include/，這個資料夾底下；XXX.so檔案會放在grib2/lib/)
