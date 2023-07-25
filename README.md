@@ -23,7 +23,7 @@ linux : CentOS 7.9
 
 筆者最初是按照官網，在虛擬機自行裝CentOS7後，用GNU的C、FORTRAN編譯器(gcc、gfortran)，去做library的編譯，後來編譯換成intel了(icc、icpc、ifort)。Linux的部分，也有人選擇Ubuntu或是WSL，個人debug過程網路上看下來感覺Ubuntu是最多人選擇的，原因之一好像是CentOS系列對於編譯WRF來講不太友善(看過有人評論CentOS是對初編譯WRF來說最不友善的作業系統哈哈XD)。再來是不論使用何種編譯器、何種版本，一定要從頭到尾都用同一個版本的編譯器，不能說你用gcc7編譯library、用gcc10編譯WRF，請不要這樣做。
 ## Library
-因為WRF會需要使用到netcdf-library(包含C和FORTRAN)以及其他相依的zlib、libpng、jasper，所以要先安裝並編譯library。
+因為WRF會需要使用到netcdf-library(包含C和FORTRAN)以及其他相依的zlib、libpng、jasper，所以要先安裝並編譯library。  
 這邊想先提個，第一次編譯library，筆者也不太了解所謂「架構」，是被提了一下有不同「架構」的library，才開始了解官網在configure後面附加的一堆選項代表什麼意思。  
 關於「架構」，筆者簡單理解為將編譯完的函式庫放入不同分類的資料夾，例如官網上的library架構可以大概圖解成：  
 
@@ -39,5 +39,6 @@ linux : CentOS 7.9
 >>>include 
 > 
 
-你會在configure後面看到
->--prefix=path/to/grib2
+你會在configure後面看到，就是將編譯完成的函式庫放進這個資料夾中，並進行簡單的分類(像是XXXX.h檔案會放在grib2/include/，這個資料夾底下；XXX.so檔案會放在grib2/lib/)
+>--prefix=path/to/grib2 #make install後會指定到此資料夾
+
