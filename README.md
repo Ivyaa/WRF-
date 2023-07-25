@@ -43,4 +43,5 @@ linux : CentOS 7.9
 >--prefix=path/to/grib2     #make install後會指定到此資料夾  
 
 就是將編譯完成的函式庫放進這個資料夾中(會自行建立)，並進行簡單的分類(像是XXXX.h檔案會放在grib2/include/，這個資料夾底下；XXX.so檔案會放在grib2/lib/)  
-另外，你也會看到--disable-shared的選項，即是詢問你要不要設定成共享的函式庫，筆者最後是選擇設定「共享靜態函式庫」，
+筆者也有看到不同架構的函式庫，但是debug和設定環境變數可能會花很久就是了XD決定先照官網走。  
+另外，從官網可以看到--disable-shared的選項，即是詢問你要不要設定成共享的函式庫，筆者最後是選擇設定「共享靜態函式庫」，所以在netcdf-c、netcdf-fortran編譯時，只會保留--disable-netcdf-4。
