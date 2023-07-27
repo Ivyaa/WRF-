@@ -45,4 +45,19 @@ linux : CentOS 7.9
 就是將編譯完成的函式庫放進這個資料夾中(會自行建立)，並進行簡單的分類(像是XXXX.h檔案會放在grib2/include/，這個資料夾底下；XXX.so檔案會放在grib2/lib/)  
 筆者也有看到不同架構的函式庫，但是debug和設定環境變數可能會花很久就是了XD決定先照官網走。  
 另外，從官網可以看到--disable-shared的選項，即是詢問你要不要設定成共享的函式庫，筆者最後是選擇設定「共享靜態函式庫」，所以在netcdf-c、netcdf-fortran編譯時，只會保留--disable-netcdf-4。  
-再來是編譯library是有順序差異的，例如安裝netcdf-fortran前，一定要先安裝netcdf-c，不然會報錯。這邊可以按照官網的順序安裝，但筆者會按照以下順序去走(大神的智慧)：MPI >> zlib >> netcdf-c >> netcdf-fortran >> libpng >> jasper
+再來是編譯library是有順序差異的，例如安裝netcdf-fortran前，一定要先安裝netcdf-c，不然會報錯。這邊可以按照官網的順序安裝，但筆者會按照以下順序去走(大神的智慧)：MPI >> zlib >> netcdf-c >> netcdf-fortran >> libpng >> jasper  
+
+最後就是每一次編譯時，可以先看看每個library的安裝文件(INSTALL)，通常會寫安裝細節、可添加的選項以及可能會遇到的bug，事先閱讀減少debug時間。
+
+###Environment variable
+這個步驟屬實複雜，因為有太多環境參數可以調，主要是在編譯library和WRF/WPS時，告訴他們要使用到的工具在哪裡，要使用的工具(含版本)又是什麼。  
+例如，筆者使用CentOS7，便含有內建的gcc4.8.5，但筆者想要使用intel icc/icpc/ifort，就要設定好如以下：  
+>export CC="icc"  
+>export CPP="icc -E"  
+>export CXXCPP="icpc -E"  
+>export FC="ifort -E"  
+>export F77="ifort -E"
+
+###Install zlib
+由於筆者使用的環境有事先下載Intel mpi，已經包含mpi套件，沒有這個套件可以先下載來安裝。在安裝zlib(或是mpi/mpich)之前，強烈建議所有用GNU編譯器、並且是在CentOS7環境下的使用者，先想辦法升級gcc的版本，由於CentOS7原本的版本是gcc4.8.5(太老舊了)，有時候在後續安裝會缺少一些gcc後續版本會有的套件，如果後續才升級套件，又會碰到前面提到的用不同版本編譯器去編譯library的問題，直接砍掉重練，建議升到gcc7以上。  
+安裝zlib過程基本上按照官網走，指定的資料夾是grib2。安裝完後
