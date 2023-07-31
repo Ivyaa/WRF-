@@ -57,6 +57,7 @@ linux : CentOS 7.9
 >export CXXCPP="icpc -E"  
 >export FC="ifort -E"  
 >export F77="ifort -E"
+
 intel本身還有許多優化設定，可以上官網查詢。
 
 ### Install zlib
