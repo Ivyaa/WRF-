@@ -57,8 +57,22 @@ linux : CentOS 7.9
 >export CXXCPP="icpc -E"  
 >export FC="ifort -E"  
 >export F77="ifort -E"
-intel本身還有許多優化設定，
+intel本身還有許多優化設定，可以上官網查詢。
 
 ### Install zlib
 由於筆者使用的環境有事先下載Intel mpi，已經包含mpi套件，沒有這個套件可以先下載來安裝。在安裝zlib(或是mpi/mpich)之前，強烈建議所有用GNU編譯器、並且是在CentOS7環境下的使用者，先想辦法升級gcc的版本，由於CentOS7原本的版本是gcc4.8.5(太老舊了)，有時候在後續安裝會缺少一些gcc後續版本會有的套件，如果後續才升級套件，又會碰到前面提到的用不同版本編譯器去編譯library的問題，直接砍掉重練，建議升到gcc7以上。  
-安裝zlib過程基本上按照官網走，指定的資料夾是grib2。安裝完後，你會在你指定的路徑中找到grib2的資料夾，裡面包含bin/lib/include/share等等。接著，要透過設定環境變數LD_LIBRARY_PATH，將zlib函式庫路徑告知系統，以便後續安裝netcdf-c,fortran的時候，系統可以透過這個環境變數來找到需要的函式庫。
+安裝zlib過程基本上按照官網走，指定的資料夾是grib2。安裝完後，你會在你指定的路徑中找到grib2的資料夾，裡面包含bin/lib/include/share等等。接著，要透過設定環境變數LD_LIBRARY_PATH，將zlib函式庫路徑告知系統，以便後續安裝netcdf-c,fortran的時候，系統可以透過這個環境變數來找到需要的函式庫。此外還需要設定一些其他的環境變數，目前安裝下來，比較重要的五個環境變數有：  
+>LIBS="-L$PATH_TO_YOUR_GRIB2_LIB"
+>CFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"
+>LDFLAGS="-L$PATH_TO_YOUR_GRIB2_LIB"
+>CPPFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"
+>FFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"
+含LD_LIBRARY_PATH在內，這六個環境變數的一定要設定好，不然待會安裝netcdf-c的時候，有可能會找不到存放zlib函式庫的位址，當然如果想要比較全面，或是系統不同導致環境變數設定不一樣，更多其他的環境變數設定可以參考這一篇文章：https://apolo-docs.readthedocs.io/en/latest/software/scientific_libraries/Zlib/Zlib-1.2.11-Intel/index.html#zlib-1-2-11-intel
+
+
+
+
+
+# 參考資料
+1. https://apolo-docs.readthedocs.io/en/latest/software/applications/wrf/4.1.1/installation-dependencies.html
+2. 
