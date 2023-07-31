@@ -75,7 +75,58 @@ intel本身還有許多優化設定，可以上官網查詢。
 確認加入好環境變數，就可以進入到安裝netcdf-c和netcdf-fortran的部分啦！  
 
 ### Install netcdf-c and netcdf-fortran
+在netcdf較新的版本，就把原本放在同一個壓縮包的C與FORTRAN分開程兩個不同的編譯，所以在編譯的過程一定要注意，要將這兩個函式庫指定到同一個資料夾，不然編譯WRF的時候會有問題。另外如果你是使用GCC編譯器而且沒有升級版本，會在這邊不停碰到「C compiler無法執行」的錯誤，筆者最後的解決辦法是發現他缺少GLIBXXX這邊想先提個，第一次編譯library，筆者也不太了解所謂「架構」，是被提了一下有不同「架構」的library，才開始了解官網在configure後面附加的一堆選項代表什麼意思。  
+關於「架構」，筆者簡單理解為將編譯完的函式庫放入不同分類的資料夾，例如官網上的library架構可以大概圖解成：  
 
+>WRFLIB_sharedstd  
+>>grib2  
+>>>bin  
+>>>lib  
+>>>include  
+>             
+>>netcdf  
+>>>bin  
+>>>lib  
+>>>include 
+> 
+
+你會在configure後面看到：
+>--prefix=path/to/grib2     #make install後會指定到此資料夾  
+
+就是將編譯完成的函式庫放進這個資料夾中(會自行建立)，並進行簡單的分類(像是XXXX.h檔案會放在grib2/include/，這個資料夾底下；XXX.so檔案會放在grib2/lib/)  
+筆者也有看到不同架構的函式庫，但是debug和設定環境變數可能會花很久就是了XD決定先照官網走。  
+另外，從官網可以看到--disable-shared的選項，即是詢問你要不要設定成共享的函式庫，筆者最後是選擇設定「shared library」，所以在netcdf-c、netcdf-fortran編譯時，只會保留--disable-netcdf-4。  
+再來是編譯library是有順序差異的，例如安裝netcdf-fortran前，一定要先安裝netcdf-c，不然會報錯。這邊可以按照官網的順序安裝，但筆者會按照以下順序去走(大神的智慧)：MPI >> zlib >> netcdf-c >> netcdf-fortran >> libpng >> jasper  
+
+最後就是每一次編譯時，可以先看看每個library的安裝文件(INSTALL)，通常會寫安裝細節、可添加的選項以及可能會遇到的bug，事先閱讀減少debug時間。
+
+### Environment variable
+這個步驟屬實複雜，因為有太多環境參數可以調  
+例如，筆者使用CentOS7，便含有內建的gcc4.8.5，但筆者想要使用intel icc/icpc/ifort，就要設定好如以下：  
+>export CC="icc"  
+>export CPP="icc -E"  
+>export CXXCPP="icpc -E"  
+>export FC="ifort -E"  
+>export F77="ifort -E"
+
+intel本身還有許多優化設定，可以上官網查詢。  
+接下來每安裝完一個Library，就會進行一次環境變數的設定，主要目的就是在編譯library和WRF/WPS時，告訴他們要使用到的工具在哪裡，要使用的工具(含版本)又是什麼。  
+
+### Install zlib
+由於筆者使用的環境有事先下載Intel mpi，已經包含mpi套件，沒有這個套件可以先下載來安裝。在安裝zlib(或是mpi/mpich)之前，強烈建議所有用GNU編譯器、並且是在CentOS7環境下的使用者，先想辦法升級gcc的版本，由於CentOS7原本的版本是gcc4.8.5(太老舊了)，有時候在後續安裝會缺少一些gcc後續版本會有的套件，如果後續才升級套件，又會碰到前面提到的用不同版本編譯器去編譯library的問題，直接砍掉重練，建議升到gcc7以上。  
+安裝zlib過程基本上按照官網走，指定的資料夾是grib2。安裝完後，你會在你指定的路徑中找到grib2的資料夾，裡面包含bin/lib/include/share等等。接著，要透過設定環境變數LD_LIBRARY_PATH，將zlib函式庫路徑告知系統，以便後續安裝netcdf-c,fortran的時候，系統可以透過這個環境變數來找到需要的函式庫。此外還需要設定一些其他的環境變數，目前安裝下來，比較重要的五個環境變數有：  
+>LIBS="-L$PATH_TO_YOUR_GRIB2_LIB"  
+>CFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"  
+>LDFLAGS="-L$PATH_TO_YOUR_GRIB2_LIB"  
+>CPPFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"  
+>FFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"  
+
+含LD_LIBRARY_PATH在內，這六個環境變數的一定要設定好，不然待會安裝netcdf-c的時候，有可能會找不到存放zlib函式庫的位址，當然如果想要比較全面，或是系統不同導致環境變數設定不一樣，更多其他的環境變數設定可以參考這一篇文章：https://apolo-docs.readthedocs.io/en/latest/software/scientific_libraries/Zlib/Zlib-1.2.11-Intel/index.html#zlib-1-2-11-intel  
+
+確認加入好環境變數，就可以進入到安裝netcdf-c和netcdf-fortran的部分啦！  
+
+### Install netcdf-c and netcdf-fortran
+在netcdf較新的版本，就把原本放在同一個壓縮包的C與FORTRAN分開程兩個不同的編譯，所以在編譯的過程一定要注意，要將這兩個函式庫指定到同一個資料夾，不然編譯WRF的時候會有問題。另外如果你的GCC編譯器而且沒有升級版本，可能會在這邊不停碰到「C compiler無法執行」的錯誤，筆者最後是發現他「缺少GLIBCXX_3.4.21」，透過升級gcc版本，設置LD_LIBRARY_PATH到gcc/lib64的資料夾下，才解決這個問題。若使用的伺服器本身就有安裝較新版本的GLIBCXX，就較不會碰到這個bug。
 
 
 
