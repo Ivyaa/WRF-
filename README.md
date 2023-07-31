@@ -100,7 +100,14 @@ intel本身還有許多優化設定，可以上官網查詢。
 確認加入好環境變數，就可以進入到安裝netcdf-c和netcdf-fortran的部分啦！  
 
 ### Install netcdf-c and netcdf-fortran
-在netcdf較新的版本，就把原本放在同一個壓縮包的C與FORTRAN分開程兩個不同的編譯，所以在編譯的過程一定要注意，要將這兩個函式庫指定到同一個資料夾，不然編譯WRF的時候會有問題。另外如果你的GCC編譯器而且沒有升級版本，可能會在這邊不停碰到「C compiler無法執行」的錯誤，筆者最後是發現他「缺少GLIBCXX_3.4.21」，透過升級gcc版本，設置LD_LIBRARY_PATH到gcc/lib64的資料夾下，才解決這個問題。若使用的伺服器本身就有安裝較新版本的GLIBCXX，就較不會碰到這個bug。
+在netcdf較新的版本，就把原本放在同一個壓縮包的C與FORTRAN分開程兩個不同的編譯，所以在編譯的過程一定要注意，要將這兩個函式庫指定到同一個資料夾，不然編譯WRF的時候會有問題。另外如果你的GCC編譯器而且沒有升級版本，可能會在這邊不停碰到「C compiler無法執行」的錯誤，筆者最後是發現他「缺少GLIBCXX_3.4.21」，透過升級gcc版本，設置LD_LIBRARY_PATH到gcc/lib64的資料夾下，才解決這個問題。若使用的伺服器本身就有安裝較新版本的GLIBCXX，就較不會碰到這個bug。  
+因為是Classic版本，所以在configure的時候，使用了--disable-netcdf-4的選項，指令如下：  
+>../configure --prefix=$DIR/netcdf --disable-netcdf-4  
+>make  
+>make install  
+
+安裝完後可以透過nc-config --all指令，檢查是否有安裝到nc4，正常來說應該要看到「has nc4 -> no」，這樣就代表沒有使用到nc4。
+
 
 
 
