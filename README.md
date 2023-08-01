@@ -64,7 +64,7 @@ intel本身還有許多優化設定，可以上官網查詢。
 ### Install zlib
 由於筆者使用的環境有事先下載Intel mpi，已經包含mpi套件，沒有這個套件可以先下載來安裝。在安裝zlib(或是mpi/mpich)之前，強烈建議所有用GNU編譯器、並且是在CentOS7環境下的使用者，先想辦法升級gcc的版本，由於CentOS7原本的版本是gcc4.8.5(太老舊了)，有時候在後續安裝會缺少一些gcc後續版本會有的套件，如果後續才升級套件，又會碰到前面提到的用不同版本編譯器去編譯library的問題，直接砍掉重練，建議升到gcc7以上。  
 安裝zlib過程基本上按照官網走，指定的資料夾是grib2。安裝完後，你會在你指定的路徑中找到grib2的資料夾，裡面包含bin/lib/include/share等等。接著，要透過設定環境變數LD_LIBRARY_PATH，將zlib函式庫路徑告知系統，以便後續安裝netcdf-c,fortran的時候，系統可以透過這個環境變數來找到需要的函式庫。此外還需要設定一些其他的環境變數，目前安裝下來，比較重要的幾個環境變數有：  
->>export PATH="$PATH_TO_GRIB2_bin:$PATH"  
+>export PATH="$PATH_TO_GRIB2_bin:$PATH"  
 >export LIBS="-L$PATH_TO_YOUR_GRIB2_LIB"  
 >export CFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"  
 >export LDFLAGS="-L$PATH_TO_YOUR_GRIB2_LIB"  
@@ -120,7 +120,7 @@ intel本身還有許多優化設定，可以上官網查詢。
 >If you REALLY want Grib2 output from WRF, modify the arch/Config_new.pl script.  
 >I_really_want_to_output_grib2_from_WRF = "FALSE" -> "TRUE" #進到此檔案後，請將FALSE改成TRUE  
 
-接著再重新configure一次，就會看到設定好的JASPERLIB/JASPERIN出現在一串選項上方。
+接著再重新configure一次，就會看到設定好的JASPERLIB/JASPERINC出現在一串選項上方。
 
 
 
