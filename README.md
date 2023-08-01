@@ -63,7 +63,8 @@ intel本身還有許多優化設定，可以上官網查詢。
 
 ### Install zlib
 由於筆者使用的環境有事先下載Intel mpi，已經包含mpi套件，沒有這個套件可以先下載來安裝。在安裝zlib(或是mpi/mpich)之前，強烈建議所有用GNU編譯器、並且是在CentOS7環境下的使用者，先想辦法升級gcc的版本，由於CentOS7原本的版本是gcc4.8.5(太老舊了)，有時候在後續安裝會缺少一些gcc後續版本會有的套件，如果後續才升級套件，又會碰到前面提到的用不同版本編譯器去編譯library的問題，直接砍掉重練，建議升到gcc7以上。  
-安裝zlib過程基本上按照官網走，指定的資料夾是grib2。安裝完後，你會在你指定的路徑中找到grib2的資料夾，裡面包含bin/lib/include/share等等。接著，要透過設定環境變數LD_LIBRARY_PATH，將zlib函式庫路徑告知系統，以便後續安裝netcdf-c,fortran的時候，系統可以透過這個環境變數來找到需要的函式庫。此外還需要設定一些其他的環境變數，目前安裝下來，比較重要的五個環境變數有：  
+安裝zlib過程基本上按照官網走，指定的資料夾是grib2。安裝完後，你會在你指定的路徑中找到grib2的資料夾，裡面包含bin/lib/include/share等等。接著，要透過設定環境變數LD_LIBRARY_PATH，將zlib函式庫路徑告知系統，以便後續安裝netcdf-c,fortran的時候，系統可以透過這個環境變數來找到需要的函式庫。此外還需要設定一些其他的環境變數，目前安裝下來，比較重要的幾個環境變數有：  
+>>export PATH="$PATH_TO_GRIB2_bin:$PATH"  
 >export LIBS="-L$PATH_TO_YOUR_GRIB2_LIB"  
 >export CFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE"  
 >export LDFLAGS="-L$PATH_TO_YOUR_GRIB2_LIB"  
@@ -96,10 +97,21 @@ intel本身還有許多優化設定，可以上官網查詢。
 >make  
 >make instal  
 
-安裝完後，由於指向相同的資料夾netcdf，所以環境變數也相同。  
-這部分筆者遇到的第一個問題是，安裝netcdf-fortran時無法使用--disable-netcdf-4的選項。若是最後無法關掉nc4，也可以在安裝WRF前，輸入環境變數  
+安裝完後，由於指向相同的資料夾netcdf，所以環境變數也相同。可以使用if-config來看一下安裝了什麼。  
+這部分筆者遇到的第一個問題是，安裝netcdf-fortran時無法使用--disable-netcdf-4的選項。  
+若是最後無法關掉nc4，也可以在安裝WRF前，輸入環境變數  
 >export NETCDF_classic=1     #使用WRF classic version  
 
+第二個問題是找不到libXXXXX.so的檔案，通常是編譯時無法透過已存在路徑去找需要的函式庫，可以先查找這個檔案在伺服器下的位置，再設置LD_LIBRARY_PATH連結過去：  
+>locate libXXXXX.so  #找此檔案在哪(若是root，也可以使用find指令)  
+>export LD_PIBRARY_PATH=$PATH_TO_LIB:$LD_LIBRARY_PATH  
+
+這是筆者比較笨的作法，如果有其他更簡潔的方式也歡迎提出！  
+
+### Install libpng and Jasper
+這兩個就比較單純，就與其他一樣configure完後編譯即可，如同官網，這兩個函式庫筆者也是放到grib2的資料夾裡，記得在最後要加上下面兩個環境變數  
+>export JASPERLIB=$PATH_TO_YOUR_GRIB2_LIB  
+>export JASPERINC=$PATH_TO_YOUR_GRIB2_INCLUDE  
 
 
 # 參考資料
