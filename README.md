@@ -91,7 +91,12 @@ intel本身還有許多優化設定，可以上官網查詢。
 >export CPPFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE -I$PATH_TO_NETCDF_INCLUDER"  
 >export FFLAGS="-I$PATH_TO_YOUR_GRIB2_INCLUDE -I$PATH_TO_NETCDF_INCLUDER"  
 
+接者安裝netcdf-fortran，指令與netcdf-c相同：  
+>../configure --prefix=$DIR/netcdf --disable-netcdf-4  
+>make  
+>make instal  
 
+安裝完後，由於指向相同的資料夾netcdf，所以環境變數也相同。
 
 # 參考資料
 1. https://apolo-docs.readthedocs.io/en/latest/software/applications/wrf/4.1.1/installation-dependencies.html
