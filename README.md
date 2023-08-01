@@ -113,6 +113,16 @@ intel本身還有許多優化設定，可以上官網查詢。
 >export JASPERLIB=$PATH_TO_YOUR_GRIB2_LIB  
 >export JASPERINC=$PATH_TO_YOUR_GRIB2_INCLUDE  
 
+## WRF/WPS
+安裝好相依的Library以及設定好環境變數，接著就可以來安裝WRF啦！  
+在官網教學中，會有不同版本的WRF可以安裝，只要先註冊即可，筆者安裝的是WRF4.4，接著進入WRF資料夾中進行configure。  
+第一個比較神奇的設定在此出現，不太確定是不是所有電腦都有，但在WRF一串選項前，會有一串文字告訴使用者「當前使用的並不是jasperlib/jasperinclude」，接著會有一串文字顯示告知要如何更改：  
+>If you REALLY want Grib2 output from WRF, modify the arch/Config_new.pl script.
+>I_really_want_to_output_grib2_from_WRF = "FALSE" -> "TRUE" #進到此檔案後，請將FALSE改成TRUE  
+
+接著再重新configure一次，就會看到設定好的JASPERLIB/JASPERIN出現在一串選項上方。
+
+
 
 # 參考資料
 1. https://apolo-docs.readthedocs.io/en/latest/software/applications/wrf/4.1.1/installation-dependencies.html
