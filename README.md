@@ -96,7 +96,11 @@ intel本身還有許多優化設定，可以上官網查詢。
 >make  
 >make instal  
 
-安裝完後，由於指向相同的資料夾netcdf，所以環境變數也相同。
+安裝完後，由於指向相同的資料夾netcdf，所以環境變數也相同。  
+這部分筆者遇到的第一個問題是，安裝netcdf-fortran時無法使用--disable-netcdf-4的選項。若是最後無法關掉nc4，也可以在安裝WRF前，輸入環境變數  
+>export NETCDF_classic=1     #使用WRF classic version  
+
+
 
 # 參考資料
 1. https://apolo-docs.readthedocs.io/en/latest/software/applications/wrf/4.1.1/installation-dependencies.html
