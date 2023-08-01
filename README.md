@@ -14,7 +14,7 @@
   
 這兩個連結是官方提供的下載點以及所需library的編譯過程，WRF有許多不同版本，目前最高是WRF4.5，可以看自己需求去下載，但建議不要下載最新版本，可能會遇到很多編譯問題。這邊要提到的版本是Classic和Compression。由於一開始是完全按照官網的方式去執行，完全沒有注意到WRF library還有分Classic、Compression的差別🤣，這邊簡易的區分方式是否要使用NC4。若在編譯netcdf-C及netcdf-fortran時，加入選項--disable-netcdf-4，即是不使用NC4，理論上編譯出來的WRF就是Classic版本，這也是官網提供的版本。若不加入選項--disable-netcdf-4，編譯WRF的時候就會自動編譯成Compression版本，也會告訴你這個版本需要使用NC4。當然，這兩種版本還是會有其他區別，如果有興趣可以上官網或google看一下。  
   
-會先提這個，是因為兩者對於library的要求不同，編譯library的順序、需要添加的選項也不一樣，在編譯的時候需要注意，不然就會像筆者一樣一個WRF編譯卡好久，但其實只是因為安裝netcdf-fortran的時候沒注意到這個問題。下面就以這兩種版本作區分來安裝WRF～
+會先提這個，是因為兩者對於library的要求不同，編譯library的順序、需要添加的選項也不一樣，在編譯的時候需要注意，不然就會像筆者一樣一個WRF編譯卡好久，但其實只是因為安裝netcdf-fortran的時候沒注意到這個問題。下面以安裝Classic version WRF為主～
 
 # Classic verion WRF4.4
 先記錄一下使用環境和Linux版本  
@@ -122,6 +122,8 @@ intel本身還有許多優化設定，可以上官網查詢。
 
 接著再重新configure一次，就會看到設定好的JASPERLIB/JASPERINC出現在一串選項上方。((神奇的設定哈哈哈XD  
 接著就可以按照官網跑跑看real_case，檢查是不是有出現官網要求的四個檔案，若有沒有出現就要檢查看看config.log裡面是出了什麼問題。通常只要環境變數有設定好，應該是不會出太大的問題。  
+
+第二個會遇到的問題就是前面提到的，netcdf-fortran的nc4關不掉，如果編譯WRF時偵測到有nc4存在，他就會安裝Compression的版本，所以安裝完成後要檢查一下，自己使用的版本是不是Classic，如果不是，就要記得加上前面提及的變數，使用Classic version。筆者當初就是netcdf-c不使用nc4，但是netcdf-fortran關不掉nc4，導致WRF瘋狂安裝compression version，一直無法順利完成編譯，後來差發現這兩者的差異。  
 
 WPS安裝同WRF，也是在官網找資源，這部分安裝編譯過程，筆者就沒遇到什麼問題了！  
 到此，Classic version就安裝完啦！
