@@ -116,12 +116,16 @@ intel本身還有許多優化設定，可以上官網查詢。
 ## WRF/WPS
 安裝好相依的Library以及設定好環境變數，接著就可以來安裝WRF啦！  
 在官網教學中，會有不同版本的WRF可以安裝，只要先註冊即可，筆者安裝的是WRF4.4，接著進入WRF資料夾中進行configure。  
-第一個比較神奇的設定在此出現，不太確定是不是所有電腦都有，但在WRF一串選項前，會有一串文字告訴使用者「當前使用的並不是jasperlib/jasperinclude」，接著會有一串文字顯示告知要如何更改：  
+第一個比較神奇的設定在此出現，不太確定是不是所有版本都有，但在WRF一串選項前，會有一串文字告訴使用者「當前使用的並不是jasperlib/jasperinclude」，接著會有一串文字顯示告知要如何更改：  
 >If you REALLY want Grib2 output from WRF, modify the arch/Config_new.pl script.  
 >I_really_want_to_output_grib2_from_WRF = "FALSE" -> "TRUE" #進到此檔案後，請將FALSE改成TRUE  
 
-接著再重新configure一次，就會看到設定好的JASPERLIB/JASPERINC出現在一串選項上方。
+接著再重新configure一次，就會看到設定好的JASPERLIB/JASPERINC出現在一串選項上方。((神奇的設定哈哈哈XD  
+接著就可以按照官網跑跑看real_case，檢查是不是有出現官網要求的四個檔案，若有沒有出現就要檢查看看config.log裡面是出了什麼問題。通常只要環境變數有設定好，應該是不會出太大的問題。  
 
+WPS安裝同WRF，也是在官網找資源，這部分安裝編譯過程，筆者就沒遇到什麼問題了！  
+到此，Classic version就安裝完啦！
+ 
 
 
 # 參考資料
