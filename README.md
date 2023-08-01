@@ -132,4 +132,6 @@ WPS安裝同WRF，也是在官網找資源，這部分安裝編譯過程，筆�
 
 # 參考資料
 1. https://apolo-docs.readthedocs.io/en/latest/software/applications/wrf/4.1.1/installation-dependencies.html
-2. 
+2. 官網：https://www2.mmm.ucar.edu/wrf/users/download/get_source.html
+3. 安裝教學：https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php#STEP1
+4. 台大WRF安裝教學：http://rain.as.ntu.edu.tw/course_wrf.html
