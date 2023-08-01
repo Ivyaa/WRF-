@@ -45,7 +45,8 @@ linux : CentOS 7.9
 就是將編譯完成的函式庫放進這個資料夾中(會自行建立)，並進行簡單的分類(像是XXXX.h檔案會放在grib2/include/，這個資料夾底下；XXX.so檔案會放在grib2/lib/)  
 筆者也有看到不同架構的函式庫，但是debug和設定環境變數可能會花很久就是了XD決定先照官網走。  
 另外，從官網可以看到--disable-shared的選項，即是詢問你要不要設定成共享的函式庫，筆者最後是選擇設定「shared library」，所以在netcdf-c、netcdf-fortran編譯時，只會保留--disable-netcdf-4。  
-再來是編譯library是有順序差異的，例如安裝netcdf-fortran前，一定要先安裝netcdf-c，不然會報錯。這邊可以按照官網的順序安裝，但筆者會按照以下順序去走(大神的智慧)：MPI >> zlib >> netcdf-c >> netcdf-fortran >> libpng >> jasper  
+再來是編譯library是有順序差異的，例如安裝netcdf-fortran前，一定要先安裝netcdf-c，不然會報錯。這邊可以按照官網的順序安裝，但筆者會按照以下順序去走(大神的智慧)：  
+>MPI >> zlib >> netcdf-c >> netcdf-fortran >> libpng >> jasper  
 
 最後就是每一次編譯時，可以先看看每個library的安裝文件(INSTALL)，通常會寫安裝細節、可添加的選項以及可能會遇到的bug，事先閱讀減少debug時間。
 
@@ -123,7 +124,7 @@ intel本身還有許多優化設定，可以上官網查詢。
 接著再重新configure一次，就會看到設定好的JASPERLIB/JASPERINC出現在一串選項上方。((神奇的設定哈哈哈XD  
 接著就可以按照官網跑跑看real_case，檢查是不是有出現官網要求的四個檔案，若有沒有出現就要檢查看看config.log裡面是出了什麼問題。通常只要環境變數有設定好，應該是不會出太大的問題。  
 
-第二個會遇到的問題就是前面提到的，netcdf-fortran的nc4關不掉，如果編譯WRF時偵測到有nc4存在，他就會安裝Compression的版本，所以安裝完成後要檢查一下，自己使用的版本是不是Classic，如果不是，就要記得加上前面提及的變數，使用Classic version。筆者當初就是netcdf-c不使用nc4，但是netcdf-fortran關不掉nc4，導致WRF瘋狂安裝compression version，一直無法順利完成編譯，後來差發現這兩者的差異。  
+第二個會遇到的問題就是前面提到的，netcdf-fortran的nc4關不掉，如果編譯WRF時偵測到有nc4存在，他就會安裝Compression的版本，所以安裝完成後要檢查一下，自己使用的版本是不是Classic，如果不是，就要記得加上前面提及的變數，使用Classic version。筆者當初就是netcdf-c不使用nc4，但是netcdf-fortran關不掉nc4，導致WRF瘋狂安裝compression version，一直無法順利完成編譯，後來才發現這兩者的差異。  
 
 WPS安裝同WRF，也是在官網找資源，這部分安裝編譯過程，筆者就沒遇到什麼問題了！  
 到此，Classic version就安裝完啦！
